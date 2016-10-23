@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>de.cernaj.test</groupId>
+		<artifactId>library</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+	<artifactId>library-common</artifactId>
+	<packaging>pom</packaging>
+
+	<modules>
+		<module>library.api</module>
+		<module>library.inmemory</module>
+	</modules>
+
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.hamcrest</groupId>
+			<artifactId>hamcrest-all</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<profiles>
+		<profile>
+			<id>bnd</id>
+
+			<activation>
+				<file>
+					<exists>bnd.bnd</exists>
+				</file>
+			</activation>
+
+			<properties>
+				<Bundle-SymbolicName>${project.groupId}.${project.artifactId}</Bundle-SymbolicName>
+			</properties>
+
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>biz.aQute.bnd</groupId>
+						<artifactId>bnd-maven-plugin</artifactId>
+						<executions>
+							<execution>
+								<goals>
+									<goal>bnd-process</goal>
+								</goals>
+								<configuration>
+									<manifestPath>META-INF/MANIFEST.MF</manifestPath>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-resources-plugin</artifactId>
+						<executions>
+							<execution>
+								<goals>
+									<goal>copy-resources</goal>
+								</goals>
+								<phase>prepare-package</phase>
+								<configuration>
+									<resources>
+										<resource>
+											<directory>META-INF</directory>
+										</resource>
+									</resources>
+									<outputDirectory>${project.build.outputDirectory}/META-INF</outputDirectory>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-jar-plugin</artifactId>
+						<configuration>
+							<archive>
+								<addMavenDescriptor>false</addMavenDescriptor>
+								<manifestFile>${project.build.outputDirectory}/META-INF/MANIFEST.MF</manifestFile>
+							</archive>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+</project>
