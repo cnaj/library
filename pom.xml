@@ -21,6 +21,7 @@
 		<maven-resources.version>3.0.1</maven-resources.version>
 		<maven-jar.version>3.0.2</maven-jar.version>
 		<bnd-maven.version>3.3.0</bnd-maven.version>
+		<maven-bundle.version>3.0.1</maven-bundle.version>
 
 		<!-- dependencies -->
 		<commons-lang3.version>3.5</commons-lang3.version>
@@ -32,14 +33,6 @@
 
 	<dependencyManagement>
 		<dependencies>
-			<!-- project dependencies -->
-
-			<dependency>
-				<groupId>${project.groupId}</groupId>
-				<artifactId>library.api</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-
 			<!-- dependencies -->
 
 			<dependency>
@@ -92,6 +85,12 @@
 					<groupId>biz.aQute.bnd</groupId>
 					<artifactId>bnd-maven-plugin</artifactId>
 					<version>${bnd-maven.version}</version>
+				</plugin>
+
+				<plugin>
+					<groupId>org.apache.felix</groupId>
+					<artifactId>maven-bundle-plugin</artifactId>
+					<version>${maven-bundle.version}</version>
 				</plugin>
 			</plugins>
 		</pluginManagement>

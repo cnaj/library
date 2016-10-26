@@ -11,6 +11,7 @@ import org.apache.commons.lang3.text.WordUtils;
 
 import library.api.Book;
 import library.api.Library;
+import library.util.LibraryUtils;
 
 public class InMemoryLibrary implements Library {
 
@@ -23,6 +24,7 @@ public class InMemoryLibrary implements Library {
 
     public void addBook(Book book) {
         this.books.add(book);
+        System.out.println("Added " + LibraryUtils.prettyPrintBook(book) + " to library.");
     }
 
     public Collection<String> getAuthorInitials() {
